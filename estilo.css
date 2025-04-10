@@ -1,0 +1,113 @@
+
+.corpo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.calculadora{
+    width: auto;
+    height: auto;
+    background-color: aqua;
+    border-radius: 2em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+    padding: 2em;
+
+    
+}
+
+
+.calculadora-topo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: brown;
+    height: auto;
+    border-radius: 2em;
+    width: 100%;
+}
+
+.visor{
+    display: flex;
+    word-wrap: break-word;
+    align-items: center;
+    padding: 1em;
+    width: 100%;
+    height: 6em;
+    background-color: black;
+    color: wheat;
+    border-radius: 2em;
+}
+
+.conteudoVisor{
+    word-break: break-all;
+}
+
+.apagador{
+    width: 30%;
+    height: 6em;
+    background-color: bisque;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.numeros{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    background-color: aqua;
+    width: 100%;
+   
+}
+
+.linha-numero{
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    width: 100%;
+}
+
+
+.igual , .numero , .ponto {
+    width: 5em;
+    height: 2em;
+    color: aqua;
+    background-color: blueviolet;
+    border-radius: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.operadores{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.operador{
+    width: 5em;
+    height: 2em;
+    color: aqua;
+    background-color: blueviolet;
+    border-radius: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
