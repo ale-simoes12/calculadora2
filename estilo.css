@@ -34,6 +34,7 @@
 .visor{
     display: flex;
     word-wrap: break-word;
+    text-align: end;
     align-items: center;
     padding: 1em;
     width: 100%;

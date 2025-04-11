@@ -12,8 +12,6 @@ campo.addEventListener("keydown", function (event) {
     ///verificar se é operador
     console.log(lista);
 
-
-
     if (lista == "") {
         apenasNumeros = true;
     }
