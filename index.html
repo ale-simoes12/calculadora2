@@ -18,39 +18,39 @@
         <div class="numeros">    
             <div class="linha-numero">
 
-                <div class="numero" onclick="capturarVisor('7', false)">7</div>
-                <div class="numero"onclick="capturarVisor('8',false)">8</div>   
-                <div class="numero" onclick="capturarVisor('9',false)">9</div>
-                <div class="operador" onclick="capturarVisor('+',true)" >+</div>        
+                <div class="numero" onclick="enviarNumero('7')">7</div>
+                <div class="numero"onclick="enviarNumero('8')">8</div>   
+                <div class="numero" onclick="enviarNumero('9')">9</div>
+                <div class="operador" onclick="enviarOperador('+',true)" >+</div>        
             </div>
             <div class="linha-numero">
-                <div class="numero" onclick="capturarVisor('4',false)">4</div>   
-                <div class="numero" onclick="capturarVisor('5',false)">5</div>   
-                <div class="numero" onclick="capturarVisor('6',false)">6</div>
-                <div class="operador" onclick="capturarVisor('-',true)">-</div>
+                <div class="numero" onclick="enviarNumero('4')">4</div>   
+                <div class="numero" onclick="enviarNumero('5')">5</div>   
+                <div class="numero" onclick="enviarNumero('6')">6</div>
+                <div class="operador" onclick="enviarOperador('-',true)">-</div>
                 
            
-              
+         
             </div>
             <div class="linha-numero">
-                <div class="numero" onclick="capturarVisor('1',false)">1</div>   
-                <div class="numero" onclick="capturarVisor('2',false)">2</div>   
-                <div class="numero" onclick="capturarVisor('3',false)">3</div>
-                <div class="operador" onclick="capturarVisor('/',true)" >/</div>   
+                <div class="numero" onclick="enviarNumero('1')">1</div>   
+                <div class="numero" onclick="enviarNumero('2')">2</div>   
+                <div class="numero" onclick="enviarNumero('3')">3</div>
+                <div class="operador" onclick="enviarOperador('/')" >/</div>   
             </div>
             <div class="linha-numero">
-                <div class="numero" onclick="capturarVisor('0',false)">0</div>   
-                <div class="ponto" onclick="adicionarPonto('.')">.</div>   
+                <div class="numero" onclick="enviarNumero('0')">0</div>      
                 <div class="igual" onclick="efetuarOperacao()" >=</div>
-                <div class="operador" onclick="capturarVisor('x',true)" >x</div>   
+                <div class="igual  apagador"  onclick="limpar()" >AC</div> 
+                <div class="operador" onclick="enviarOperador('*')" >x</div>   
             </div>
-
+<!-- 
             <div class="linha-numero">
                 <div class="numero" onclick="">√</div>   
                 <div class="ponto" onclick="">^</div>   
                 <div class="igual" onclick="" >%</div>
                 <div class="igual    apagador"  onclick="limpar()" >AC</div>   
-            </div>
+            </div> -->
         </div>
         <!-- <div class="operadores">
             <div class="operador" onclick="capturarVisor('+',true)" >+</div>
@@ -68,6 +68,6 @@
 
 
 
-    <script src="script2.js" defer></script>
+    <script src="script.js" defer></script>
 </body>
 </html>

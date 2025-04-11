@@ -1,134 +1,247 @@
-const visor = document.querySelector(".visor");
-let listaOperacao = [];
-let isOperatorAnterior = true;
-let pontoExiste = false;
-let numeroOperacoes = 0;
-let novaLista = [];
+let campo = document.getElementById("fname");
 
-function capturarVisor(elementoVisor, isOperator) {
-  if (isOperator) {
-    if (isOperatorAnterior == true) {
-      console.log("return");
-      return;
-    } else {
-      isOperatorAnterior = true;
-      pontoExiste = false;
-      numeroOperacoes++;
+
+let apenasNumeros = true;
+let existeOperador = false;
+let existeIgual = false;
+const regexOperador = /^[+\-*/]$/;
+const regexNumero = /^-?\d*\.?\d+$/;
+let lista = "";
+
+campo.addEventListener("keydown", function (event) {
+    ///verificar se é operador
+    console.log(lista);
+
+
+
+    if (lista == "") {
+        apenasNumeros = true;
     }
-  } else {
-    isOperatorAnterior = false;
-  }
-  listaOperacao.push(elementoVisor);
-  visor.textContent += elementoVisor;
-  
+
+    if (regexOperador.test(event.key)) {
+        if (lista.length == 0) {
+            console.log("caiu");
+            event.preventDefault();
+        }
+
+        if (lista[0] == "-" && lista.length == 1) {
+            event.preventDefault();
+        }
+
+        else if (apenasNumeros == false && existeOperador == false) {
+            console.log("add");
+            existeOperador = true;
+            lista += event.key;
+        } else {
+            event.preventDefault();
+        }
+    }
+
+    ///verificar se é numero
+    else if (regexNumero.test(event.key)) {
+        if (existeIgual == true) {
+            event.preventDefault();
+        }
+        lista += event.key;
+        apenasNumeros = false;
+    }
+
+    ///verificar se é igaul
+    else if (event.key == "=") {
+        console.log("caiu");
+        let ultimoElemento = lista[lista.length - 1];
+
+        if (
+            existeOperador == true &&
+            regexNumero.test(ultimoElemento) &&
+            existeIgual == false
+        ) {
+            event.preventDefault();
+            existeIgual = true;
+            // lista += event.key;
+            apenasNumeros = true;
+            existeOperador = false;
+            existeIgual = false;
+            fazerOperacao();
+
+        } else {
+            event.preventDefault();
+        }
+
+    }
+
+    else if (event.key == "Backspace") {
+        console.log("caiu");
+        let ultimoElemento = lista[lista.length - 1];
+        lista = lista.slice(0, -1);
+        console.log(lista);
+        if (regexOperador.test(ultimoElemento)) {
+            existeOperador = false;
+        }
+    }
+
+    else {
+        event.preventDefault();
+    }
+
+});
+
+
+
+///TECLADO VIRTUAL
+
+function enviarNumero(numero) {
+    lista += numero;
+    campo.value += numero;
+    apenasNumeros = false;
 }
 
-function adicionarPonto(ponto) {
-  if (pontoExiste || isOperatorAnterior == true) {
-    return;
-  }
-  pontoExiste = true;
-  isOperatorAnterior = true;
-  listaOperacao.push(ponto);
-  visor.textContent += ponto;
+
+
+function enviarOperador(operador) {
+    if (lista.length == 0) {
+        console.log("caiu");
+       return;
+    }
+
+    if (lista[0] == "-" && lista.length == 1) {
+       return;
+    }
+    else if (apenasNumeros == false && existeOperador == false) {
+        existeOperador = true;
+        lista += operador;
+        campo.value += operador;
+    }
+    else {
+        return;
+    }
 }
 
-function limpar() {
-  visor.textContent = "";
-  listaOperacao = [];
-  isOperatorAnterior = true;
-  pontoExiste = false;
-  novaLista = [];
-}
+
+
 
 function efetuarOperacao() {
-  const ultimoElemento = listaOperacao[listaOperacao.length - 1];
-  if (ultimoElemento.match(/^[\.\+\/x\-]$/) || numeroOperacoes == 0) {
-    return;
-  }
-
-  juntarNumero();
-  let listasomas = [];
-
-  ///calcular operacao x
-  for (let i = 0; i < novaLista.length; i++) {
-    if (String(novaLista[i]).match(/^[x\/]$/)) {
-      const numeroFloatEsquerda = parseFloat(novaLista[i - 1]);
-      const numeroFloatDireita = parseFloat(novaLista[i + 1]);
-      // console.log(numeroFloatDireita);
-      let resultado;
-      if (novaLista[i] == "x") {
-        resultado = numeroFloatEsquerda * numeroFloatDireita;
-      }
-      if (novaLista[i] == "/") {
-        resultado = numeroFloatEsquerda / numeroFloatDireita;
-      }
-
-      if (i + 2 < novaLista.length && ["x", "/"].includes(novaLista[i + 2])) {
-        novaLista[i - 1] = "z";
-        novaLista[i] = "z";
-        novaLista[i + 1] = resultado;
-      } else {
-        novaLista[i - 1] = "z";
-        novaLista[i] = "z";
-        novaLista[i + 1] = resultado;
-      }
+    let ultimoElemento = lista[lista.length - 1];
+    if (
+        existeOperador == true &&
+        regexNumero.test(ultimoElemento) &&
+        existeIgual == false
+    ) {
+        fazerOperacao();
     }
-  }
-
-  for (let i = 0; i < novaLista.length; i++) {
-    if (novaLista[i] != "z") {
-      listasomas.push(novaLista[i]);
-    }
-  }
-
-  let resultado = 0;
-  for (let i = 0; i < listasomas.length; i++) {
-    if (String(listasomas[i]).match(/^[+-]$/)) {
-      const numeroFloatEsquerda = parseFloat(listasomas[i - 1]);
-      const numeroFloatDireita = parseFloat(listasomas[i + 1]);
-      console.log(numeroFloatDireita);
-      // let resultado = 0;
-      if (listasomas[i] == "+") {
-        resultado = numeroFloatEsquerda + numeroFloatDireita;
-      }
-      if (listasomas[i] == "-") {
-        resultado = numeroFloatEsquerda - numeroFloatDireita;
-      }
-
-      if (i + 2 < listasomas.length && ["+", "-"].includes(listasomas[i + 2])) {
-        listasomas[i - 1] = "z";
-        listasomas[i] = "z";
-        listasomas[i + 1] = resultado;
-      } else {
-        listasomas[i - 1] = "z";
-        listasomas[i] = "z";
-        listasomas[i + 1] = resultado;
-      }
-    }
-  }
-
-  console.log(listasomas);
 
 }
 
-function juntarNumero() {
-  let numero = "";
-  // console.log(listaOperacao);
-  for (let i = 0; i < listaOperacao.length; i++) {
-    if (listaOperacao[i].match(/^[+\/x-]$/)) {
-      novaLista.push(numero);
-      novaLista.push(listaOperacao[i]);
-      numero = "";
-    } else {
-      numero += listaOperacao[i];
+
+function fazerOperacao() {
+    let numero1 = "";
+    let numero2 = "";
+    let operador = "";
+    let segundaParte = false;
+
+    console.log("opercao", lista);
+    for (let i = 0; i < lista.length; i++) {
+
+        if (regexOperador.test(lista[i]) && i != 0) {
+            segundaParte = true;
+            operador = lista[i];
+        }
+        else {
+            if (segundaParte == false) {
+                numero1 += lista[i];
+            }
+            else {
+                numero2 += lista[i];
+            }
+        }
     }
-  }
-  novaLista.push(numero);
 
-  console.log(novaLista);
+
+    if (operador == "+") {
+        soma(numero1, numero2);
+        existeOperador = false;
+        apenasNumeros = false;
+
+    }
+    if (operador == "-") {
+        subtracao(numero1, numero2);
+        existeOperador = false;
+        apenasNumeros = false;
+    }
+
+    if (operador == "/") {
+        divisao(numero1, numero2);
+        existeOperador = false;
+        apenasNumeros = false;
+    }
+    if (operador == "*") {
+        multiplicacao(numero1, numero2);
+        existeOperador = false;
+        apenasNumeros = false;
+    }
+
+
+    console.log("numero1", numero1);
+    console.log("numero2", numero2);
+
+
 }
 
-function isNumber(value) {
-  return !isNaN(parseFloat(value)) && isFinite(value);
+
+
+
+
+function soma(numero1, numero2) {
+    let resultado = parseInt(numero1) + parseInt(numero2);
+    lista = String(resultado);
+    console.log(lista);
+    campo.value = lista;
 }
+
+
+
+function subtracao(numero1, numero2) {
+    let resultado = parseInt(numero1) - parseInt(numero2);
+    lista = String(resultado);
+    campo.value = lista;
+
+}
+
+
+
+function multiplicacao(numero1, numero2) {
+    let resultado = parseInt(numero1) * parseInt(numero2);
+    lista = String(resultado);
+    campo.value = lista;
+}
+
+
+
+function divisao(numero1, numero2) {
+    let resultado = parseInt(numero1) / parseInt(numero2);
+    lista = String(resultado);
+    campo.value = resultado;
+}
+
+
+
+function limpar(){
+    lista = "";
+    campo.value = lista;
+    apenasNumeros = true;
+    existeOperador = false;
+    existeIgual = false;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
