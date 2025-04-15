@@ -4,7 +4,9 @@ let campo = document.getElementById("fname");
 let apenasNumeros = true;
 let existeOperador = false;
 let existeIgual = false;
-const regexOperador = /^[+\-*/]$/;
+// const regexOperador = /^[+\-*/]$/;
+const regexOperador = /^[+\-*/%^]$/;
+
 const regexNumero = /^-?\d*\.?\d+$/;
 let lista = "";
 
@@ -180,6 +182,19 @@ function fazerOperacao() {
         apenasNumeros = false;
     }
 
+    if (operador == "^") {
+        potencia(numero1, numero2);
+        existeOperador = false;
+        apenasNumeros = false;
+    }
+
+    
+    if (operador == "%") {
+        porcentagem(numero1, numero2);
+        existeOperador = false;
+        apenasNumeros = false;
+    }
+
 
     console.log("numero1", numero1);
     console.log("numero2", numero2);
@@ -219,6 +234,23 @@ function multiplicacao(numero1, numero2) {
 
 function divisao(numero1, numero2) {
     let resultado = parseInt(numero1) / parseInt(numero2);
+    lista = String(resultado);
+    campo.value = resultado;
+}
+
+function potencia(numero1, numero2) {
+    let base = parseInt(numero1);
+    let expoente = parseInt(numero2);
+    const resultado = Math.pow(base, expoente);
+    lista = String(resultado);
+    campo.value = resultado;
+}
+
+
+function porcentagem(numero1, numero2) {
+    let valor = parseInt(numero1);
+    let percentual = parseInt(numero2);
+    const resultado = (valor * percentual) / 100; 
     lista = String(resultado);
     campo.value = resultado;
 }
